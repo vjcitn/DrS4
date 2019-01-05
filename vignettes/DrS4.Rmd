@@ -1,0 +1,64 @@
+---
+title: "DrS4: help in contemplating S4 class usage"
+author: "Vincent J. Carey, stvjc at channing.harvard.edu"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# Observation
+
+We are interested in the SingleCellExperiment class.
+
+It is defined in a package.
+
+```{r dosce}
+suppressPackageStartupMessages({
+ library(SingleCellExperiment)
+})
+methods(class="SingleCellExperiment")
+```
+
+There are many methods listed, including '=='.
+
+```{r chk1}
+try(getMethod("==", "SingleCellExperiment"))
+```
+
+We can find the signatures for which '==' is
+defined:
+```{r lksm}
+showMethods("==")
+```
+
+DrS4 will, ultimately, provide clearer access to the
+methods actually defined for a class.  This requires
+specifying a package where we look for the class
+and its methods.  More work needs to be done in this domain.
+Specifically, the function 'defdMethods' currently only
+retrieves one method/signature for each generic method
+defined for the class.
+
+```{r useDrS4}
+library(DrS4)
+require("SingleCellExperiment")
+scem = defdMethods("SingleCellExperiment")
+scem
+scem[[2]][[1]]
+```
+
+It doesn't always work.
+```{r tryagain}
+library(S4Vectors)
+vm = try(defdMethods("Vector", "package:S4Vectors"))
+vm
+vm[[2]][[59]]
+```

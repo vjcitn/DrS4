@@ -1,0 +1,13 @@
+Package: DrS4
+Title: helpers for comprehension of S4
+Description: Provide assistance in examining S4 classes
+Version: 0.0.0
+Author: Vince Carey
+Suggests: knitr, SummarizedExperiment, SingleCellExperiment
+Depends: methods, S4Vectors
+Maintainer: VJ Carey <stvjc@channing.harvard.edu>
+License: Artistic-2.0
+LazyLoad: yes
+biocViews: Infrastructure
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1

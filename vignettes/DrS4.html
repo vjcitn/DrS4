@@ -336,57 +336,30 @@ $(document).ready(function () {
 <p>DrS4 will, ultimately, provide clearer access to the methods actually defined for a class. This requires specifying a package where we look for the class and its methods. More work needs to be done in this domain. Specifically, the function ‘defdMethods’ currently only retrieves one method/signature for each generic method defined for the class.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DrS4)
 <span class="kw">require</span>(<span class="st">&quot;SingleCellExperiment&quot;</span>)
-scem =<span class="st"> </span><span class="kw">defdMethods</span>(<span class="st">&quot;SingleCellExperiment&quot;</span>)</code></pre></div>
-<pre><code>## there are probably more signatures per method than listed here</code></pre>
-<pre><code>## see FIXME in source</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scem</code></pre></div>
-<pre><code>## DataFrame with 41 rows and 2 columns
-##               mnames                             sigs
-##          &lt;character&gt;                           &lt;List&gt;
-## 1                  [ SingleCellExperiment,ANY,ANY,...
-## 2                [&lt;- SingleCellExperiment,ANY,ANY,...
-## 3              cbind             SingleCellExperiment
-## 4   clearSizeFactors             SingleCellExperiment
-## 5        clearSpikes             SingleCellExperiment
-## ...              ...                              ...
-## 37        spikeNames             SingleCellExperiment
-## 38               tpm             SingleCellExperiment
-## 39             tpm&lt;-             SingleCellExperiment
-## 40           weights             SingleCellExperiment
-## 41         weights&lt;-             SingleCellExperiment</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scem[[<span class="dv">2</span>]][[<span class="dv">1</span>]]</code></pre></div>
-<pre><code>##                      x                      i                      j 
-## &quot;SingleCellExperiment&quot;                  &quot;ANY&quot;                  &quot;ANY&quot; 
-##                   drop 
-##                  &quot;ANY&quot;</code></pre>
-<p>It doesn’t always work.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(S4Vectors)
-vm =<span class="st"> </span><span class="kw">try</span>(<span class="kw">defdMethods</span>(<span class="st">&quot;Vector&quot;</span>, <span class="st">&quot;package:S4Vectors&quot;</span>))</code></pre></div>
-<pre><code>## there are probably more signatures per method than listed here</code></pre>
-<pre><code>## see FIXME in source</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vm</code></pre></div>
-<pre><code>## DataFrame with 67 rows and 2 columns
-##          mnames               sigs
-##     &lt;character&gt;             &lt;List&gt;
-## 1            !=         ANY,Vector
-## 2             [ Vector,ANY,ANY,...
-## 3           [&lt;- Vector,ANY,ANY,...
-## 4          %in%         ANY,Vector
-## 5             &lt;         ANY,Vector
-## ...         ...                ...
-## 63       values             Vector
-## 64     values&lt;-             Vector
-## 65       window             Vector
-## 66         with             Vector
-## 67        xtabs             Vector</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vm[[<span class="dv">2</span>]][[<span class="dv">59</span>]]</code></pre></div>
-<pre><code>## [1] &quot;Error in parse(text = paste0(\&quot;c(\&quot;, st, \&quot;)\&quot;)) : \n  &lt;text&gt;:1:3: unexpected input\n1: c(_\n      ^\n&quot;
-## attr(,&quot;class&quot;)
-## [1] &quot;try-error&quot;
-## attr(,&quot;condition&quot;)
-## &lt;simpleError in parse(text = paste0(&quot;c(&quot;, st, &quot;)&quot;)): &lt;text&gt;:1:3: unexpected input
-## 1: c(_
-##       ^&gt;</code></pre>
+scem =<span class="st"> </span><span class="kw">defdMethods</span>(<span class="st">&quot;SingleCellExperiment&quot;</span>)
+<span class="kw">head</span>(scem)</code></pre></div>
+<pre><code>##             method                   cl                          pkg
+## 1                [ SingleCellExperiment package:SingleCellExperiment
+## 2              [&lt;- SingleCellExperiment package:SingleCellExperiment
+## 3            cbind SingleCellExperiment package:SingleCellExperiment
+## 4 clearSizeFactors SingleCellExperiment package:SingleCellExperiment
+## 5      clearSpikes SingleCellExperiment package:SingleCellExperiment
+## 6           coerce SingleCellExperiment package:SingleCellExperiment
+##   nmeth4cl
+## 1        1
+## 2        1
+## 3        1
+## 4        1
+## 5        1
+## 6        2
+##                                                                                                                   sigs
+## 1                                                               x=&quot;SingleCellExperiment&quot;, i=&quot;ANY&quot;, j=&quot;ANY&quot;, drop=&quot;ANY&quot;
+## 2                                             x=&quot;SingleCellExperiment&quot;, i=&quot;ANY&quot;, j=&quot;ANY&quot;, value=&quot;SingleCellExperiment&quot;
+## 3                                                                                           ...=&quot;SingleCellExperiment&quot;
+## 4                                                                                        object=&quot;SingleCellExperiment&quot;
+## 5                                                                                             x=&quot;SingleCellExperiment&quot;
+## 6 from=&quot;RangedSummarizedExperiment&quot;, to=&quot;SingleCellExperiment&quot;, from=&quot;SummarizedExperiment&quot;, to=&quot;SingleCellExperiment&quot;</code></pre>
+<p>The example for <code>defdMethods</code> shows one way to work with multiple related classes.</p>
 </div>
 
 

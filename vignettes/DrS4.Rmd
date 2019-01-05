@@ -23,6 +23,9 @@ It is defined in a package.
 ```{r dosce}
 suppressPackageStartupMessages({
  library(SingleCellExperiment)
+ library(DrS4)
+ library(dplyr)
+ library(magrittr)
 })
 methods(class="SingleCellExperiment")
 ```
@@ -51,14 +54,23 @@ defined for the class.
 library(DrS4)
 require("SingleCellExperiment")
 scem = defdMethods("SingleCellExperiment")
-scem
-scem[[2]][[1]]
+head(scem)
 ```
 
-It doesn't always work.
-```{r tryagain}
-library(S4Vectors)
-vm = try(defdMethods("Vector", "package:S4Vectors"))
-vm
-vm[[2]][[59]]
+The example for `defdMethods` shows one way to work with
+multiple related classes.  Specifically, we'll list methods
+of coercing between classes involving SummarizedExperiment,
+RangedSummarizedExperiment, and SingleCellExperiment.
+```{r doex}
+require("SummarizedExperiment")
+se = defdMethods("SummarizedExperiment")
+rse = defdMethods("RangedSummarizedExperiment", "package:SummarizedExperiment")
+cmb = try(rbind(scem,se,rse))
+require("dplyr")
+require("magrittr")
+tmp = (cmb %>% filter(method=="coerce"))
+sl = (tmp %>% select(sigs))[[1]]
+names(sl) = tmp$cl
+sl
 ```
+

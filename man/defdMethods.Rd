@@ -4,25 +4,41 @@
 \alias{defdMethods}
 \title{defdMethods enumerates methods defined for a class in a package -- NEEDS WORK}
 \usage{
-defdMethods(cl, pkg = paste0("package:", cl))
+defdMethods(cl, pkg = paste0("package:", cl), verbose = TRUE)
 }
 \arguments{
 \item{cl}{character(1) name of class}
 
 \item{pkg}{character(1) name of package where class is defined, defaults to 'package:[classname]' which works for major classes like SummarizedExperiment}
+
+\item{verbose}{logical(1) if TRUE (default) will issue a message enumerating superclasses.}
 }
 \description{
 defdMethods enumerates methods defined for a class in a package -- NEEDS WORK
 }
 \note{
-This is an early attack on the problem of enumerating
-defined methods for a class.  As of 5 Jan 2019 this function
-lists only one signature per method and fails on oddly
-names signature components like '_data'.
+Users should consider how methods inherited from superclasses defined in
+other packages are also relevant to reports of this type.  See the example.
 }
 \examples{
+# start with simple tabulation of package-specific methods
+suppressPackageStartupMessages({
 require("SingleCellExperiment")
+})
 scem = defdMethods("SingleCellExperiment")
-scem
-scem[[2]][[1]]
+head(scem)
+scem$method
+scem["isSpike", "sigs"]
+# now let's collect some related classes, with the objective of
+# enumerating relevant coercion methods and their signatures
+require("SummarizedExperiment")
+se = defdMethods("SummarizedExperiment", verbose=FALSE)
+rse = defdMethods("RangedSummarizedExperiment", "package:SummarizedExperiment", verbose=FALSE)
+cmb = try(rbind(scem,se,rse))
+require("dplyr")
+require("magrittr")
+tmp = (cmb \%>\% filter(method=="coerce"))
+sl = (tmp \%>\% select(sigs))[[1]]
+names(sl) = tmp$cl
+sl
 }

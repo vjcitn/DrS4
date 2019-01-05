@@ -1,7 +1,7 @@
 Package: DrS4
 Title: helpers for comprehension of S4
 Description: Provide assistance in examining S4 classes
-Version: 0.0.0
+Version: 0.0.1
 Author: Vince Carey
 Suggests: knitr, SummarizedExperiment, SingleCellExperiment, dplyr, magrittr
 Depends: methods, S4Vectors

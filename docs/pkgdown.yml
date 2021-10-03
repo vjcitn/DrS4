@@ -1,0 +1,11 @@
+pandoc: '2.13'
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  DrS4: DrS4.html
+  clgen: clgen.html
+last_built: 2021-10-03T13:24Z
+urls:
+  reference: https://vjcitn.github.io/DrS4/reference
+  article: https://vjcitn.github.io/DrS4/articles
+

@@ -14,7 +14,7 @@ output:
     toc: yes
 ---
 
-# Observation
+# Observation: `methods` may report more than we need
 
 We are interested in the SingleCellExperiment class.
 
@@ -25,7 +25,6 @@ suppressPackageStartupMessages({
  library(SingleCellExperiment)
  library(DrS4)
  library(dplyr)
- library(magrittr)
 })
 methods(class="SingleCellExperiment")
 ```
@@ -42,7 +41,9 @@ defined:
 showMethods("==")
 ```
 
-DrS4 will, ultimately, provide clearer access to the
+# Finding methods defined in a package
+
+DrS4 aims to provide clearer access to the
 methods actually defined for a class.  This requires
 specifying a package where we look for the class
 and its methods.  More work needs to be done in this domain.
@@ -50,26 +51,28 @@ Specifically, the function 'defdMethods' currently only
 retrieves one method/signature for each generic method
 defined for the class.
 
+## Example
+
 ```{r useDrS4}
 library(DrS4)
 require("SingleCellExperiment")
-scem = defdMethods("SingleCellExperiment")
+scem = defdMethods(cl="SingleCellExperiment",
+          pkg="SingleCellExperiment")
 head(scem)
 ```
 
-The example for `defdMethods` shows one way to work with
-multiple related classes.  Specifically, we'll list methods
+## Listing available coercion methods
+
+Here we'll list methods
 of coercing between classes involving SummarizedExperiment,
 RangedSummarizedExperiment, and SingleCellExperiment.
 ```{r doex}
 require("SummarizedExperiment")
-se = defdMethods("SummarizedExperiment")
-rse = defdMethods("RangedSummarizedExperiment", "package:SummarizedExperiment")
+se = defdMethods("SummarizedExperiment") # pkg has simple default
+rse = defdMethods("RangedSummarizedExperiment", pkg="SummarizedExperiment")
 cmb = try(rbind(scem,se,rse))
-require("dplyr")
-require("magrittr")
-tmp = (cmb %>% filter(method=="coerce"))
-sl = (tmp %>% select(sigs))[[1]]
+tmp = (cmb |> filter(method=="coerce"))
+sl = (tmp |> select(sigs))[[1]]
 names(sl) = tmp$cl
 sl
 ```

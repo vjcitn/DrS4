@@ -9,9 +9,14 @@ defdMethods(cl, pkg = paste0("package:", cl), verbose = TRUE)
 \arguments{
 \item{cl}{character(1) name of class}
 
-\item{pkg}{character(1) name of package where class is defined, defaults to 'package:[classname]' which works for major classes like SummarizedExperiment}
+\item{pkg}{character(1) name of package where class is defined, defaults to 'package:\link{classname}' which works for major classes like SummarizedExperiment; \verb{package:} will be prepended if missing from supplied value of \code{pkg}}
 
 \item{verbose}{logical(1) if TRUE (default) will issue a message enumerating superclasses.}
+}
+\value{
+a data.frame instance with columns 'method', 'cl', 'pkg',
+'nmeth4cl', counting the number of method-signature combinations for
+this method, and 'sigs', a list of lists of named signature elements (each element is a list of character vectors of method parameter types, named with parameter names)
 }
 \description{
 defdMethods enumerates methods defined for a class in a package -- NEEDS WORK

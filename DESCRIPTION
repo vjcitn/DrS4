@@ -1,7 +1,7 @@
 Package: DrS4
 Title: helpers for comprehension of S4
 Description: Provide assistance in examining S4 classes
-Version: 0.0.1
+Version: 0.0.3
 Author: Vince Carey
 Suggests: knitr, SummarizedExperiment, SingleCellExperiment, dplyr, magrittr
 Depends: methods, S4Vectors
@@ -10,5 +10,7 @@ License: Artistic-2.0
 LazyLoad: yes
 biocViews: Infrastructure
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.2
 Encoding: UTF-8
+BugReports: https://github.com/vjcitn/DrS4/issues
+Roxygen: list(markdown = TRUE)

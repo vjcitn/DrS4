@@ -1,0 +1,60 @@
+---
+title: "ClassSupport: from prototypical list to S4 class"
+author: "Vincent J. Carey, stvjc at channing.harvard.edu"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{ClassSupport: from prototypical list to S4 class}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# Purpose: reduce tedium of S4 class definition
+
+Given a prototypical list of elementary R data
+it is trivial but tedious to define a valid
+S4 class with appropriate getter and setter methods.
+DrS4's `ClassSupport` class helps with this.
+
+# Example: Turtle
+
+Stuart Lee's [blog post on S4](https://stuartlee.org/2019/07/09/s4-short-guide/) 
+inspires the default
+parameter settings in the `clgen` function.
+
+```{r lkdef}
+suppressPackageStartupMessages(library(DrS4))
+args(clgen)
+```
+
+## Generate the basic definitions
+
+Try it:
+```{r ttt}
+tt = clgen()
+tt
+```
+
+We dump the code defining the class and its get/set methods.
+```{r ddd}
+dumpcs(tt)
+```
+
+To use the code, we can source it, or place in a
+package.
+
+```{r nnn}
+tf = tempfile()
+dumpcs(tt, tf)
+source(tf)
+tur = new("Turtle")
+tur
+path(tur)
+path(tur) = matrix(c(1,1), nr=1)
+tur
+```

@@ -1,10 +1,10 @@
 #' defdMethods enumerates methods defined for a class in a package -- NEEDS WORK
 #' @param cl character(1) name of class
-#' @param pkg character(1) name of package where class is defined, defaults to 'package:[classname]' which works for major classes like SummarizedExperiment
+#' @param pkg character(1) name of package where class is defined, defaults to 'package:[classname]' which works for major classes like SummarizedExperiment; `package:` will be prepended if missing from supplied value of `pkg`
 #' @param verbose logical(1) if TRUE (default) will issue a message enumerating superclasses.
 #' @note Users should consider how methods inherited from superclasses defined in
 #' other packages are also relevant to reports of this type.  See the example.
-#' @value a data.frame instance with columns 'method', 'cl', 'pkg',
+#' @return a data.frame instance with columns 'method', 'cl', 'pkg',
 #' 'nmeth4cl', counting the number of method-signature combinations for
 #' this method, and 'sigs', a list of lists of named signature elements (each element is a list of character vectors of method parameter types, named with parameter names)
 #' @examples
@@ -30,6 +30,8 @@
 #' sl
 #' @export
 defdMethods = function(cl, pkg=paste0("package:", cl), verbose=TRUE) {
+ lkpref = grep("package:", pkg)
+ if (length(lkpref)==0) pkg=paste0("package:", pkg)
  stopifnot(pkg %in% search())
  ## define helpers
  cleanF = function(st) {

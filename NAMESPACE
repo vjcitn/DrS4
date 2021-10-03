@@ -3,5 +3,7 @@
 export(clgen)
 export(defdMethods)
 export(dumpcs)
+export(extendClassSupport)
 exportClasses(ClassSupport)
 exportMethods(dumpcs)
+exportMethods(extendClassSupport)

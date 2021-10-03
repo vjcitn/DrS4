@@ -80,3 +80,22 @@ make_setter = function(cl, slot) {
                sQuote(cl), sQuote(slot))
  list(g=g, m=m)
 }
+
+#' support extension of a class support instance to support a new class defined by a name and prototype list
+#' @export
+setGeneric("extendClassSupport",  function(oldcls, extras, newcl)
+   standardGeneric("extendClassSupport"))
+
+#' support extension of a class support instance to support a new class defined by a name and prototype list
+#' @export
+setMethod("extendClassSupport", c("ClassSupport", "list", "character"),
+   function(oldcls, extras, newcl) {
+     newsl = sapply(sapply(extras, class), "[", 1) # DEBT - multiple inh not addressed
+     newdef = sprintf("setClass(%s, contains=%s, slots=%s)",
+               sQuote(newcl), sQuote(slot(oldcls, "clname")), paste0("c(", repstr(extras), ")"))
+     getter_code = lapply(names(extras), function(s) make_getter(newcl, s))
+     setter_code = lapply(names(extras), function(s) make_setter(newcl, s))
+     new("ClassSupport", clname=newcl, defcode=newdef, getters=getter_code, setters=setter_code,
+         protolist=extras)
+   })
+

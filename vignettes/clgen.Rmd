@@ -40,6 +40,11 @@ tt = clgen()
 tt
 ```
 
+Learn a little more about this infrastructure:
+```{r lkckllk}
+getClass(class(tt))
+```
+
 We dump the code defining the class and its get/set methods.
 ```{r ddd}
 dumpcs(tt)
@@ -58,3 +63,39 @@ path(tur)
 path(tur) = matrix(c(1,1), nr=1)
 tur
 ```
+## Extend the class
+
+Stuart showed how a more functional turtle can be
+defined -- one that holds a pen. We'll need a new
+definition and new
+getters and setters.
+
+We defined a method
+on our `ClassSupport` class to
+produce the new class.
+
+```{r doext}
+newprops = list(colour = "pink", thickness = 1, on = FALSE)
+nn = extendClassSupport(tt, newprops, "TurtleWithPen")
+nn
+dumpcs(nn)
+```
+
+We can now source that code to allow composition
+of methods for TurtleWithPen.
+
+# Envoi
+
+There is something unsavory about this approach to
+code generation.  I produced it in the face of a task
+involving a configuration object that seems to require
+many slots.  I wanted to avoid the temptation to
+use simple functions and the at sign.  My hope is that
+programs along the lines of those demonstrated here
+will help lower the barrier to adoption of formal
+class and method definitions in R programming.  There
+are surely many improvements to be made in what has
+been proposed here.
+
+
+

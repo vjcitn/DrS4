@@ -4,7 +4,7 @@ author: "Vincent J. Carey, stvjc at channing.harvard.edu"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{}
+  %\VignetteIndexEntry{DrS4: help in contemplating S4 class usage}
   %\VignetteEncoding{UTF-8}
 output:
   BiocStyle::html_document:
